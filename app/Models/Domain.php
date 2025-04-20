@@ -24,4 +24,9 @@ class Domain extends Model
     {
         return $this->hasMany(SslCertificate::class);
     }
+
+    public function errorMessages()
+    {
+        return $this->morphMany(ErrorMessage::class, 'errorable');
+    }
 }

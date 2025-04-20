@@ -23,6 +23,11 @@ class SslCertificate extends Model
         return $this->belongsTo(Domain::class);
     }
 
+    public function errorMessages()
+    {
+        return $this->morphMany(ErrorMessage::class, 'errorable');
+    }
+
     protected $casts = [
         'expired' => 'datetime',
         'port' => 'integer',
