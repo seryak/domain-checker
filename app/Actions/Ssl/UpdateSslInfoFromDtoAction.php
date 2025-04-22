@@ -16,7 +16,7 @@ class UpdateSslInfoFromDtoAction
             // @TODO: Handle errors if needed
             // $sslCertificate->errorMessages()->create(['text' => $dto->errorMessage]);
         } else {
-            $data['expired_at'] = $dto->expirationDate->startOfDay();
+            $data['expired'] = $dto->expirationDate->startOfDay();
         }
 
         $sslCertificate->update($data);

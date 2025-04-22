@@ -11,14 +11,15 @@ use App\Models\SslCertificate;
 class SslService
 {
     const DEFAULT_PORT = 443;
+    protected Domain $domain;
     public function __construct(
-        protected Domain $domain,
         protected SslClientInterface $sslClient,
         protected UpdateSslInfoFromDtoAction $updateSslInfoFromDtoAction,
     ) {}
 
-    public function checkSslForDomain(): void
+    public function checkSslForDomain(Domain $domain): void
     {
+        $this->domain = $domain;
         $certificates = $this->getCertificates();
         foreach ($certificates as $certificate) {
             $this->checkSsl($certificate);

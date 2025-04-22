@@ -4,7 +4,6 @@ namespace App\Service\Ssl;
 
 use App\Contracts\Services\SslClientInterface;
 use App\Dto\Ssl\SslCheckDTO;
-use App\Models\Enum\DomainStatus;
 use App\Models\Enum\SslStatus;
 use App\Models\SslCertificate;
 use Illuminate\Support\Carbon;
@@ -29,19 +28,9 @@ class NativeSslClient implements SslClientInterface
             status: isset($client)
                 ? $expirationDate->greaterThan(now()) ? SslStatus::OK : SslStatus::EXPIRED
                 : SslStatus::ERROR,
-            issuer: null,
+            // @TODO: Передавать информацию о том, кто сделал сертификат
+            issuer: isset($client) ? $cert['issuer']['O'] : null,
             errorMessage: $errstr,
         );
-
-        if (!$client) {
-            $sslCertificate->update(['status' => SslStatus::ERROR->value]);
-        } else {
-            $params = stream_context_get_params($client);
-            $cert = openssl_x509_parse($params["options"]["ssl"]["peer_certificate"]);
-            $sslCertificate->update([
-                'status' => DomainStatus::OK->value,
-                'expired' => Carbon::parse($cert['validTo_time_t']),
-            ]);
-        }
     }
 }
