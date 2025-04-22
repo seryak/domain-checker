@@ -5,6 +5,8 @@ namespace App\Models;
 use Database\Factories\SslCertificateFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class SslCertificate extends Model
 {
@@ -18,12 +20,12 @@ class SslCertificate extends Model
         'expired',
     ];
 
-    public function domain()
+    public function domain(): BelongsTo
     {
         return $this->belongsTo(Domain::class);
     }
 
-    public function errorMessages()
+    public function errorMessages(): MorphMany
     {
         return $this->morphMany(ErrorMessage::class, 'errorable');
     }

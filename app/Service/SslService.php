@@ -2,18 +2,20 @@
 
 namespace App\Service;
 
+use App\Actions\Ssl\UpdateSslInfoFromDtoAction;
+use App\Contracts\Services\SslClientInterface;
 use App\Models\Domain;
-use App\Models\Enum\DomainStatus;
 use App\Models\Enum\SslStatus;
 use App\Models\SslCertificate;
-use Illuminate\Support\Carbon;
 
 class SslService
 {
     const DEFAULT_PORT = 443;
-    public function __construct(protected Domain $domain)
-    {
-    }
+    public function __construct(
+        protected Domain $domain,
+        protected SslClientInterface $sslClient,
+        protected UpdateSslInfoFromDtoAction $updateSslInfoFromDtoAction,
+    ) {}
 
     public function checkSslForDomain(): void
     {
@@ -37,19 +39,9 @@ class SslService
         return $certificates;
     }
 
-    public function checkSsl(SslCertificate $sslCertificate, int $port = 443, int $timeout = 30): void
+    public function checkSsl(SslCertificate $sslCertificate): void
     {
-        $context = stream_context_create(["ssl" => ["capture_peer_cert" => true]]);
-        $client = @stream_socket_client("ssl://{$sslCertificate->domain->name}:{$port}", $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, $context);
-        if (!$client) {
-            $sslCertificate->update(['status' => SslStatus::ERROR->value]);
-        } else {
-            $params = stream_context_get_params($client);
-            $cert = openssl_x509_parse($params["options"]["ssl"]["peer_certificate"]);
-            $sslCertificate->update([
-                'status' => DomainStatus::OK->value,
-                'expired' => Carbon::parse($cert['validTo_time_t']),
-            ]);
-        }
+        $dto = $this->sslClient->checkSsl($sslCertificate);
+        $this->updateSslInfoFromDtoAction->execute($sslCertificate, $dto);
     }
 }
