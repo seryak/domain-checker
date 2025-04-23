@@ -10,6 +10,7 @@
 </head>
 <body class="bg-gray-100" x-data="{ openFilter: false }">
 <div class="container mx-auto px-4 py-8">
+    <form action="{{ route('ssl.report') }}" method="GET" class="mb-4">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">SSL Отчёт</h1>
         <button class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg">
@@ -23,21 +24,22 @@
                 <input type="text"
                        placeholder="Поиск домена..."
                        class="border rounded-lg px-4 py-2 w-64"
+                       name="search"
                        value="{{ request('search') }}">
-                <select class="border rounded-lg px-4 py-2">
+                <select class="border rounded-lg px-4 py-2" name="status">
                     <option value="">Все статусы</option>
-                    <option value="valid" @selected(request('status') == SslStatus::OK->value)>Действительные</option>
-                    <option value="expiring" @selected(request('status') == SslStatus::EXPIRED->value)>Истекли</option>
-                    <option value="expired" @selected(request('status') == SslStatus::ERROR->value)>Ошибка</option>
+                    <option value="{{ SslStatus::OK->value }}" @selected(request('status') == SslStatus::OK->value)>Действительные</option>
+                    <option value="{{ SslStatus::EXPIRED->value }}" @selected(request('status') == SslStatus::EXPIRED->value)>Истекли</option>
+                    <option value="{{ SslStatus::ERROR->value }}" @selected(request('status') == SslStatus::ERROR->value)>Ошибка</option>
                 </select>
             </div>
             <div class="flex items-center space-x-2">
                 <span class="text-sm text-gray-500">Сортировка:</span>
-                <select class="border rounded-lg px-4 py-2">
-                    <option value="valid_to" @selected(request('sort') == 'valid_to')>Дата окончания</option>
+                <select class="border rounded-lg px-4 py-2" name="sort">
+                    <option value="expired" @selected(request('sort') == 'valid_to')>Дата окончания</option>
                     <option value="domain_id" @selected(request('sort') == 'domain_id')>Домен</option>
                 </select>
-                <select class="border rounded-lg px-4 py-2">
+                <select class="border rounded-lg px-4 py-2" name="direction">
                     <option value="asc" @selected(request('direction') == 'asc')>По возрастанию</option>
                     <option value="desc" @selected(request('direction') == 'desc')>По убыванию</option>
                 </select>
@@ -89,6 +91,7 @@
             {{ $certificates->links() }}
         </div>
     </div>
+    </form>
 </div>
 </body>
 </html>

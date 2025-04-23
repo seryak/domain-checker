@@ -16,6 +16,7 @@ class NativeSslClient implements SslClientInterface
     {
         $context = stream_context_create(["ssl" => ["capture_peer_cert" => true]]);
         $client = @stream_socket_client("ssl://{$sslCertificate->domain->name}:{$sslCertificate->port}", $errno, $errstr, self::TIMEOUT, STREAM_CLIENT_CONNECT, $context);
+        $cert = null;
 
         if ($client) {
             $params = stream_context_get_params($client);
@@ -25,11 +26,11 @@ class NativeSslClient implements SslClientInterface
         return new SslCheckDTO(
             domain: $sslCertificate->domain->name,
             expirationDate: (isset($client) && is_array($cert)) ? $expirationDate = Carbon::parse($cert['validTo_time_t']) : null,
-            status: isset($client)
+            status: (isset($client) && is_array($cert))
                 ? $expirationDate->greaterThan(now()) ? SslStatus::OK : SslStatus::EXPIRED
                 : SslStatus::ERROR,
             // @TODO: Передавать информацию о том, кто сделал сертификат
-            issuer: isset($client) ? $cert['issuer']['O'] : null,
+            issuer: (isset($client) && is_array($cert)) ? $cert['issuer']['O'] : null,
             errorMessage: $errstr,
         );
     }
