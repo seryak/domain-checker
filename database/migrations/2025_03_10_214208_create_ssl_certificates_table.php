@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('ssl_certificates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('domain_id')->constrained()->cascadeOnDelete();
-            $table->unsignedSmallInteger('port')->default(443);
+            $table->unsignedSmallInteger('port');
             $table->string('status')->default(SslStatus::ERROR->value);
             $table->timestamp('expired')->nullable();
             $table->timestamps();

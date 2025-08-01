@@ -17,7 +17,9 @@ class DomainFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->domainName,
+            'status' => $this->faker->randomElement(['active', 'inactive', 'pending']),
+            'checked_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }
