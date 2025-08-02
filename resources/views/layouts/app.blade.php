@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+
+    <!-- Styles / Scripts -->
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-64 bg-base-200 border-r border-base-300 flex flex-col">
+            <div class="p-4 border-b border-base-300">
+                <h1 class="text-xl font-bold">{{ config('app.name', 'Laravel') }}</h1>
+                <div class="text-sm opacity-70 mt-1">Панель управления</div>
+            </div>
+            
+            <nav class="flex-1 p-4">
+                <ul class="menu menu-vertical gap-1">
+                    <li class="menu-title">
+                        <span>Основное</span>
+                    </li>
+                    <li>
+                        <a href="{{ url('/') }}" @if(request()->is('/')) class="active" @endif>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Главная
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('ssl.report') }}" @if(request()->routeIs('ssl.report')) class="active" @endif>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            SSL Отчет
+                        </a>
+                    </li>
+                    
+                    <li class="menu-title mt-4">
+                        <span>Демонстрации</span>
+                    </li>
+                    <li>
+
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="p-4 border-t border-base-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="avatar placeholder">
+                        <div class="bg-neutral text-neutral-content rounded-full w-10">
+                            <span>{{ auth()->user()->name ?? 'U' }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-medium">{{ auth()->user()->name ?? 'Пользователь' }}</div>
+                        <div class="text-sm opacity-70">Администратор</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-sm">Тема:</span>
+                    <div class="join">
+                        <input class="join-item theme-controller btn btn-xs" type="radio" name="theme" value="light" aria-label="Светлая" />
+                        <input class="join-item theme-controller btn btn-xs" type="radio" name="theme" value="dark" aria-label="Темная" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <div class="bg-base-100 border-b border-base-300 p-4">
+                <div class="flex items-center justify-between">
+                    <div class="text-xl font-semibold">@yield('title', 'Панель управления')</div>
+                    <div class="flex items-center gap-2">
+                        <button class="btn btn-ghost btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </button>
+                        <div class="dropdown dropdown-end">
+                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                                <div class="w-10 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul tabindex="0" class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><a>Профиль</a></li>
+                                <li><a>Настройки</a></li>
+                                <li><a>Выйти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-auto p-6">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+
+    @yield('scripts')
+    
+    <script>
+        // Установка текущей темы
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const themeControllers = document.querySelectorAll('.theme-controller');
+            themeControllers.forEach(controller => {
+                if (controller.value === currentTheme) {
+                    controller.checked = true;
+                }
+            });
+            
+            // Обработчик переключения темы
+            themeControllers.forEach(controller => {
+                controller.addEventListener('change', function() {
+                    document.documentElement.setAttribute('data-theme', this.value);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
