@@ -9,3 +9,4 @@ Route::get('/', function () {
 });
 
 Route::get('/ssl-report', [SslReportController::class, 'index'])->name('ssl.report');
+Route::post('/trigger-check', [SslReportController::class, 'triggerCheck'])->name('ssl.trigger-check');

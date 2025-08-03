@@ -7,15 +7,25 @@
     <div class="card-body">
         <div class="flex justify-between items-center mb-4">
             <h2 class="card-title">SSL Отчёт</h2>
-            <form action="{{ route('ssl.report') }}" method="GET">
-                <button class="btn btn-primary" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                    Обновить отчет
+            <div class="flex gap-2">
+                <form action="{{ route('ssl.report') }}" method="GET">
+                    <button class="btn btn-primary" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Обновить отчет
+                    </button>
+                </form>
+                <button id="runCheckBtn" class="btn btn-secondary">
+                    <span class="spinner hidden">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                    <span class="button-text">Execute Check</span>
                 </button>
-            </form>
+            </div>
         </div>
+
+        <div id="notification-container"></div>
 
         <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex flex-col md:flex-row gap-2">
@@ -112,4 +122,71 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const runCheckBtn = document.getElementById('runCheckBtn');
+        const spinner = runCheckBtn.querySelector('.spinner');
+        const buttonText = runCheckBtn.querySelector('.button-text');
+        const notificationContainer = document.getElementById('notification-container');
+
+        runCheckBtn.addEventListener('click', function() {
+            // Disable button and show spinner
+            runCheckBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            buttonText.classList.add('hidden');
+
+            // Clear previous notifications
+            notificationContainer.innerHTML = '';
+
+            // Make AJAX request
+            axios.post('{{ route('ssl.trigger-check') }}')
+                .then(function(response) {
+                    if (response.data.success) {
+                        // Show success message
+                        const successAlert = document.createElement('div');
+                        successAlert.className = 'alert alert-success mt-3';
+                        successAlert.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>${response.data.message}</span>
+                        `;
+                        notificationContainer.appendChild(successAlert);
+                    } else {
+                        // Show error message
+                        const errorAlert = document.createElement('div');
+                        errorAlert.className = 'alert alert-error mt-3';
+                        errorAlert.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>${response.data.message}</span>
+                        `;
+                        notificationContainer.appendChild(errorAlert);
+                    }
+                })
+                .catch(function(error) {
+                    // Show error message
+                    const errorAlert = document.createElement('div');
+                    errorAlert.className = 'alert alert-error mt-3';
+                    errorAlert.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Error: ${error.message}</span>
+                    `;
+                    notificationContainer.appendChild(errorAlert);
+                    console.error('Error executing domain check:', error);
+                })
+                .finally(function() {
+                    // Re-enable button and hide spinner
+                    runCheckBtn.disabled = false;
+                    spinner.classList.add('hidden');
+                    buttonText.classList.remove('hidden');
+                });
+        });
+    });
+</script>
 @endsection

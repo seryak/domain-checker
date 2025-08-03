@@ -28,4 +28,20 @@ class SslReportController extends Controller
 
         return view('ssl-report', compact('certificates'));
     }
+
+    public function triggerCheck()
+    {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('domains:check-all');
+            return response()->json([
+                'success' => true,
+                'message' => 'Domains checked successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error executing domain check: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
