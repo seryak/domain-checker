@@ -74,6 +74,7 @@
                         <th>Статус</th>
                         <th>Дата окончания</th>
                         <th>Действия</th>
+                        <th>Управление</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,10 +108,37 @@
                                     </svg>
                                 </a>
                             </td>
+                            <td>
+                                <div class="btn-group">
+                                    <!-- Кнопка удаления домена -->
+                                    <form action="{{ route('domains.destroy', $cert->domain->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" 
+                                                class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete(this.form, 'Домен и все SSL-сертификаты будут удалены. Продолжить?')">
+                                            Удалить домен
+                                        </button>
+                                    </form>
+                                    
+                                    <!-- Кнопка удаления сертификата -->
+                                    @if($cert->id)
+                                        <form action="{{ route('certificates.destroy', $cert->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" 
+                                                    class="btn btn-warning btn-sm"
+                                                    onclick="confirmDelete(this.form, 'Удалить SSL-сертификат? Домен останется.')">
+                                                Удалить сертификат
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">Нет данных для отображения</td>
+                            <td colspan="5" class="text-center">Нет данных для отображения</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -123,6 +151,7 @@
     </div>
 </div>
 @endsection
+
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -188,5 +217,12 @@
                 });
         });
     });
+
+    // Функция подтверждения удаления
+    function confirmDelete(form, message) {
+        if (confirm(message)) {
+            form.submit();
+        }
+    }
 </script>
 @endsection
