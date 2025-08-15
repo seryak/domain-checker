@@ -44,4 +44,40 @@ class SslReportController extends Controller
             ], 500);
         }
     }
+    
+    public function checkSingle(Request $request)
+    {
+        try {
+            // Валидация входных данных
+            $request->validate([
+                'domain' => 'required|string|regex:/^[a-zA-Z0-9.-]+$/'
+            ]);
+            
+            $domainName = $request->input('domain');
+            
+            // Проверка, существует ли домен
+            $domain = \App\Models\Domain::firstOrCreate(
+                ['name' => $domainName],
+                ['status' => \App\Models\Enum\DomainStatus::ACTIVE->value]
+            );
+            
+            // Проверка SSL для домена
+            $sslService = app(\App\Service\SslService::class);
+            $sslService->checkSslForDomain($domain);
+            
+            // Получение обновленного сертификата
+            $certificate = $domain->sslCertificates()->first();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Domain checked successfully',
+                'certificate' => $certificate
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error checking domain: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
