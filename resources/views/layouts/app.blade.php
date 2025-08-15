@@ -122,10 +122,36 @@
     @yield('scripts')
     
     <script>
+        // Функция для сохранения темы в localStorage
+        function saveTheme(theme) {
+            try {
+                localStorage.setItem('app-theme', theme);
+            } catch (error) {
+                console.error('Ошибка сохранения темы:', error);
+            }
+        }
+
+        // Функция для загрузки темы из localStorage
+        function loadTheme() {
+            try {
+                const savedTheme = localStorage.getItem('app-theme');
+                if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    return savedTheme;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки темы:', error);
+            }
+            return null;
+        }
+
         // Установка текущей темы
         document.addEventListener('DOMContentLoaded', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
+            // Загружаем сохраненную тему или используем текущую
+            const currentTheme = loadTheme() || document.documentElement.getAttribute('data-theme');
             const themeControllers = document.querySelectorAll('.theme-controller');
+            
+            // Устанавливаем состояние переключателей
             themeControllers.forEach(controller => {
                 if (controller.value === currentTheme) {
                     controller.checked = true;
@@ -135,7 +161,9 @@
             // Обработчик переключения темы
             themeControllers.forEach(controller => {
                 controller.addEventListener('change', function() {
-                    document.documentElement.setAttribute('data-theme', this.value);
+                    const newTheme = this.value;
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    saveTheme(newTheme);
                 });
             });
         });
