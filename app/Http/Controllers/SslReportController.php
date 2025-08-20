@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SslCertificate;
+use Native\Laravel\Facades\Notification;
 
 class SslReportController extends Controller
 {
@@ -12,18 +13,18 @@ class SslReportController extends Controller
         $certificates = SslCertificate::query()
             ->with('domain')
             ->when($request->filled('search'), fn($q) => $q->whereHas('domain', fn($q) => $q->where('name', 'like', "%{$request->search}%")))
-            ->when($request->filled('status'), fn($q) => $q->where('status', $request->status))
+            ->when($request->filled('status') && $request->status != '-', fn($q) => $q->where('status', $request->status))
             ->when($request->filled('sort'), function($q) use ($request) {
                 $sort = $request->input('sort');
                 if ($sort === 'expired') {
-                    $q->orderBy('expired', $request->input('direction', 'asc'));
+                    $q->orderBy('expired');
                 } elseif ($sort === 'domain') {
-                    $q->orderBy('domain.name', $request->input('direction', 'asc'));
+                    $q->orderBy('domain.name');
                 } else {
-                    $q->orderBy('created_at', $request->input('direction', 'asc'));
+                    $q->orderBy('created_at');
                 }
             })
-            ->orderBy('expired', $request->input('direction', 'asc'))
+            ->orderBy('expired')
             ->paginate(25);
 
         return view('ssl-report', compact('certificates'));
@@ -58,7 +59,7 @@ class SslReportController extends Controller
             // Проверка, существует ли домен
             $domain = \App\Models\Domain::firstOrCreate(
                 ['name' => $domainName],
-                ['status' => \App\Models\Enum\DomainStatus::ACTIVE->value]
+                ['status' => \App\Models\Enum\DomainStatus::OK->value]
             );
             
             // Проверка SSL для домена

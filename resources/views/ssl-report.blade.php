@@ -8,14 +8,12 @@
         <div class="flex justify-between items-center mb-4">
             <h2 class="card-title">SSL Отчёт</h2>
             <div class="flex gap-2">
-                <form action="{{ route('ssl.report') }}" method="GET">
-                    <button class="btn btn-primary" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                        Обновить отчет
-                    </button>
-                </form>
+                <button class="btn btn-primary" type="submit" form="filterForm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Обновить отчет
+                </button>
                 <button id="runCheckBtn" class="btn btn-secondary">
                     <span class="spinner hidden">
                         <i class="fas fa-spinner fa-spin"></i>
@@ -34,6 +32,7 @@
         <div id="notification-container"></div>
 
         <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <form id="filterForm" action="{{ route('ssl.report') }}" method="GET">
             <div class="flex flex-col md:flex-row gap-2">
                 <input type="text"
                        placeholder="Поиск домена..."
@@ -43,7 +42,7 @@
                        form="filterForm">
                 
                 <select class="select select-bordered" name="status" form="filterForm">
-                    <option value="">Все статусы</option>
+                    <option value="-" @selected(request('status') == '-')>Все статусы</option>
                     <option value="{{ SslStatus::OK->value }}" @selected(request('status') == SslStatus::OK->value)>Действительные</option>
                     <option value="{{ SslStatus::EXPIRED->value }}" @selected(request('status') == SslStatus::EXPIRED->value)>Истекли</option>
                     <option value="{{ SslStatus::ERROR->value }}" @selected(request('status') == SslStatus::ERROR->value)>Ошибка</option>
@@ -57,20 +56,10 @@
                         <option value="expired" @selected(request('sort') == 'valid_to')>Дата окончания</option>
                         <option value="domain_id" @selected(request('sort') == 'domain_id')>Домен</option>
                     </select>
-                    <select class="select select-bordered select-sm" name="direction" form="filterForm">
-                        <option value="asc" @selected(request('direction') == 'asc')>По возрастанию</option>
-                        <option value="desc" @selected(request('direction') == 'desc')>По убыванию</option>
-                    </select>
                 </div>
             </div>
+            </form>
         </div>
-
-        <form id="filterForm" action="{{ route('ssl.report') }}" method="GET" class="hidden">
-            <input type="hidden" name="search" value="{{ request('search') }}">
-            <input type="hidden" name="status" value="{{ request('status') }}">
-            <input type="hidden" name="sort" value="{{ request('sort') }}">
-            <input type="hidden" name="direction" value="{{ request('direction') }}">
-        </form>
 
         <div class="overflow-x-auto">
             <table class="table table-zebra">
