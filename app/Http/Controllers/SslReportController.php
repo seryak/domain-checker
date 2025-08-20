@@ -14,16 +14,6 @@ class SslReportController extends Controller
             ->with('domain')
             ->when($request->filled('search'), fn($q) => $q->whereHas('domain', fn($q) => $q->where('name', 'like', "%{$request->search}%")))
             ->when($request->filled('status') && $request->status != '-', fn($q) => $q->where('status', $request->status))
-            ->when($request->filled('sort'), function($q) use ($request) {
-                $sort = $request->input('sort');
-                if ($sort === 'expired') {
-                    $q->orderBy('expired');
-                } elseif ($sort === 'domain') {
-                    $q->orderBy('domain.name');
-                } else {
-                    $q->orderBy('created_at');
-                }
-            })
             ->orderBy('expired')
             ->paginate(25);
 

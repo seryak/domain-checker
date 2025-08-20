@@ -47,14 +47,6 @@
                     <option value="{{ SslStatus::EXPIRED->value }}" @selected(request('status') == SslStatus::EXPIRED->value)>Истекли</option>
                     <option value="{{ SslStatus::ERROR->value }}" @selected(request('status') == SslStatus::ERROR->value)>Ошибка</option>
                 </select>
-                
-                <div class="flex items-center gap-2">
-                    <span class="text-sm hidden md:block">Сортировка:</span>
-                    <select class="select select-bordered select-sm w-full md:w-32" name="sort" form="filterForm">
-                        <option value="expired" @selected(request('sort') == 'valid_to')">Дата окончания</option>
-                        <option value="domain_id" @selected(request('sort') == 'domain_id')">Домен</option>
-                    </select>
-                </div>
             </div>
             </form>
         </div>
