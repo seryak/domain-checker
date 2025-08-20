@@ -33,7 +33,7 @@
 
         <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <form id="filterForm" action="{{ route('ssl.report') }}" method="GET">
-            <div class="flex flex-col md:flex-row gap-2">
+            <div class="flex flex-row md:flex-row gap-2 items-center">
                 <input type="text"
                        placeholder="Поиск домена..."
                        class="input input-bordered w-full md:w-64"
@@ -41,20 +41,18 @@
                        value="{{ request('search') }}"
                        form="filterForm">
                 
-                <select class="select select-bordered" name="status" form="filterForm">
+                <select class="select select-bordered w-full md:w-40" name="status" form="filterForm">
                     <option value="-" @selected(request('status') == '-')>Все статусы</option>
                     <option value="{{ SslStatus::OK->value }}" @selected(request('status') == SslStatus::OK->value)>Действительные</option>
                     <option value="{{ SslStatus::EXPIRED->value }}" @selected(request('status') == SslStatus::EXPIRED->value)>Истекли</option>
                     <option value="{{ SslStatus::ERROR->value }}" @selected(request('status') == SslStatus::ERROR->value)>Ошибка</option>
                 </select>
-            </div>
-            
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
-                <span class="text-sm">Сортировка:</span>
-                <div class="flex gap-2">
-                    <select class="select select-bordered select-sm" name="sort" form="filterForm">
-                        <option value="expired" @selected(request('sort') == 'valid_to')>Дата окончания</option>
-                        <option value="domain_id" @selected(request('sort') == 'domain_id')>Домен</option>
+                
+                <div class="flex items-center gap-2">
+                    <span class="text-sm hidden md:block">Сортировка:</span>
+                    <select class="select select-bordered select-sm w-full md:w-32" name="sort" form="filterForm">
+                        <option value="expired" @selected(request('sort') == 'valid_to')">Дата окончания</option>
+                        <option value="domain_id" @selected(request('sort') == 'domain_id')">Домен</option>
                     </select>
                 </div>
             </div>
