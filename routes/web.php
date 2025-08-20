@@ -6,11 +6,9 @@ use App\Http\Controllers\LibadwaitaDemoController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\SslCertificateController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SslReportController::class, 'index'])->name('ssl.report');
 
-Route::get('/ssl-report', [SslReportController::class, 'index'])->name('ssl.report');
+//Route::get('/ssl-report', [SslReportController::class, 'index'])->name('ssl.report');
 Route::post('/trigger-check', [SslReportController::class, 'triggerCheck'])->name('ssl.trigger-check');
 Route::post('/check-single', [SslReportController::class, 'checkSingle'])->name('ssl.check-single');
 
