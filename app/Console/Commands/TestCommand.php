@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Contracts\Services\WhoisClientInterface;
 use App\Models\Domain;
 use App\Models\Enum\DomainStatus;
 use App\Service\SslService;
@@ -34,12 +35,30 @@ class TestCommand extends Command
      */
     public function handle()
     {
+        $whois = app(WhoisClientInterface::class);
+        dd($whois->getDomainInfo(Domain::find(2)));
 
+
+//        Domain::create([
+//            'name' => 'wtolk.ru',
+//        ]);
+//        Domain::create([
+//            'name' => 'altair19.ru',
+//        ]);
+//        dd('done');
 //
 //
         $domain = Domain::find(2);
-        app(WhoisService::class)->checkDomain($domain);
-        (new SslService($domain))->checkSslForDomain();
+//        dd($domain->errorMessages->toArray());
+//        $domain->errorMessages()->create([
+//            'text' => 'text test error',
+////            'metadata' => ['key' => 'value', 'key2' => 'value2'],
+//        ]);
+
+
+
+//        app(WhoisService::class)->checkDomain($domain);
+        app(SslService::class)->checkSslForDomain($domain);
 //
 //
         dd('done');
