@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Применяем middleware для установки языка ко всем веб-запросам
+        $middleware->web(\App\Http\Middleware\SetLanguage::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
