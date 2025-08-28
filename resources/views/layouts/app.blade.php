@@ -22,10 +22,9 @@
 <body class="min-h-screen flex flex-col bg-base-100">
     <div class="flex flex-1 overflow-hidden">
         <!-- Sidebar -->
-        <div class="w-64 bg-base-200 border-r border-base-300 flex flex-col">
+        <div class="w-64 border-r border-base-300 flex flex-col">
             <div class="p-4 border-b border-base-300">
-                <h1 class="text-xl font-bold">{{ config('app.name', 'Laravel') }}</h1>
-                <div class="text-sm opacity-70 mt-1">Панель управления</div>
+                <img src="/logo.png" alt="SSLPatrol Logo" class="h-16 w-auto mb-2">
             </div>
             
             <nav class="flex-1 p-4">
@@ -98,32 +97,32 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Top Bar -->
-            <div class="bg-base-100 border-b border-base-300 p-4">
-                <div class="flex items-center justify-between">
-                    <div class="text-xl font-semibold">@yield('title', 'Панель управления')</div>
-                    <div class="flex items-center gap-2">
-                        <button class="btn btn-ghost btn-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                        </button>
-                        <div class="dropdown dropdown-end">
-                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                                <div class="w-10 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <ul tabindex="0" class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a>Профиль</a></li>
-                                <li><a>Настройки</a></li>
-                                <li><a>Выйти</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="bg-base-100 border-b border-base-300 p-4">--}}
+{{--                <div class="flex items-center justify-between">--}}
+{{--                    <div class="text-xl font-semibold">@yield('title', 'Панель управления')</div>--}}
+{{--                    <div class="flex items-center gap-2">--}}
+{{--                        <button class="btn btn-ghost btn-sm">--}}
+{{--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />--}}
+{{--                            </svg>--}}
+{{--                        </button>--}}
+{{--                        <div class="dropdown dropdown-end">--}}
+{{--                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">--}}
+{{--                                <div class="w-10 rounded-full">--}}
+{{--                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />--}}
+{{--                                    </svg>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <ul tabindex="0" class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">--}}
+{{--                                <li><a>Профиль</a></li>--}}
+{{--                                <li><a>Настройки</a></li>--}}
+{{--                                <li><a>Выйти</a></li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <!-- Content Area -->
             <div class="flex-1 overflow-auto p-6">

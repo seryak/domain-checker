@@ -14,7 +14,7 @@
         "io-developer/php-whois": "^4.1",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "nativephp/electron": "*",
+        "nativephp/electron": "^1.2",
         "true/punycode": "^2.1"
     },
     "require-dev": {
