@@ -30,10 +30,33 @@
             
             <div class="form-control">
                 <label class="label">
+                    <span class="label-text">Тема приложения</span>
+                    <span class="label-text-alt text-error">*</span>
+                </label>
+                @php
+                    $currentTheme = Settings::get('app_theme', 'light');
+                @endphp
+                <select name="theme"
+                        id="theme"
+                        class="select select-bordered w-full"
+                        required>
+                    <option value="light" {{ $currentTheme === 'light' ? 'selected' : '' }}>Светлая</option>
+                    <option value="dark" {{ $currentTheme === 'dark' ? 'selected' : '' }}>Темная</option>
+                </select>
+                <label class="label">
+                    <span class="label-text-alt">Выберите цветовую тему интерфейса</span>
+                </label>
+                @error('theme')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-control">
+                <label class="label">
                     <span class="label-text">Язык приложения</span>
                     <span class="label-text-alt text-error">*</span>
                 </label>
-                <select name="language" 
+                <select name="language"
                         id="language"
                         class="select select-bordered w-full"
                         required>
@@ -121,7 +144,11 @@
                     // Update language immediately
                     const selectedLanguage = document.getElementById('language').value;
                     document.documentElement.lang = selectedLanguage;
-                    
+
+                    // Update theme immediately
+                    const selectedTheme = document.getElementById('theme').value;
+                    document.documentElement.setAttribute('data-theme', selectedTheme);
+
                     // Update page title
                     document.title = `Настройки - ${selectedLanguage.toUpperCase()}`;
                     

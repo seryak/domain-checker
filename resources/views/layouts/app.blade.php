@@ -24,7 +24,7 @@
         <!-- Sidebar -->
         <div class="w-64 border-r border-base-300 flex flex-col">
             <div class="p-4 border-b border-base-300">
-                <img src="/logo.png" alt="SSLPatrol Logo" class="h-16 w-auto mb-2">
+                <img src="/logo_{{ Settings::get('app_theme', 'light') }}.png" alt="SSLPatrol Logo" class="h-16 w-auto mb-2">
             </div>
             
             <nav class="flex-1 p-4">
@@ -72,7 +72,7 @@
             </nav>
             
             <div class="p-4 border-t border-base-300">
-                <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center gap-3">
                     <div class="avatar placeholder">
                         <div class="bg-neutral text-neutral-content rounded-full w-10">
                             <span>{{ auth()->user()->name ?? 'U' }}</span>
@@ -81,14 +81,6 @@
                     <div>
                         <div class="font-medium">{{ auth()->user()->name ?? 'Пользователь' }}</div>
                         <div class="text-sm opacity-70">Администратор</div>
-                    </div>
-                </div>
-                
-                <div class="flex items-center justify-between">
-                    <span class="text-sm">Тема:</span>
-                    <div class="join">
-                        <input class="join-item theme-controller btn btn-xs" type="radio" name="theme" value="light" aria-label="Светлая" />
-                        <input class="join-item theme-controller btn btn-xs" type="radio" name="theme" value="dark" aria-label="Темная" />
                     </div>
                 </div>
             </div>
@@ -132,52 +124,10 @@
     </div>
 
     @yield('scripts')
-    
     <script>
-        // Функция для сохранения темы в localStorage
-        function saveTheme(theme) {
-            try {
-                localStorage.setItem('app-theme', theme);
-            } catch (error) {
-                console.error('Ошибка сохранения темы:', error);
-            }
-        }
-
-        // Функция для загрузки темы из localStorage
-        function loadTheme() {
-            try {
-                const savedTheme = localStorage.getItem('app-theme');
-                if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-                    document.documentElement.setAttribute('data-theme', savedTheme);
-                    return savedTheme;
-                }
-            } catch (error) {
-                console.error('Ошибка загрузки темы:', error);
-            }
-            return null;
-        }
-
-        // Установка текущей темы
+        // Initialize theme when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем сохраненную тему или используем текущую
-            const currentTheme = loadTheme() || document.documentElement.getAttribute('data-theme');
-            const themeControllers = document.querySelectorAll('.theme-controller');
-            
-            // Устанавливаем состояние переключателей
-            themeControllers.forEach(controller => {
-                if (controller.value === currentTheme) {
-                    controller.checked = true;
-                }
-            });
-            
-            // Обработчик переключения темы
-            themeControllers.forEach(controller => {
-                controller.addEventListener('change', function() {
-                    const newTheme = this.value;
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                    saveTheme(newTheme);
-                });
-            });
+            document.documentElement.setAttribute('data-theme', '{{ Settings::get('app_theme', 'light') }}');
         });
     </script>
 </body>
