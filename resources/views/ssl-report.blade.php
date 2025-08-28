@@ -65,7 +65,7 @@
                 <tbody>
                     @forelse ($certificates as $cert)
                         <tr>
-                            <td>{{ $cert->domain->name }}</td>
+                            <td>{{ $cert->domain->name_human_readable }}</td>
                             <td>
                                 @switch($cert->status)
                                     @case(SslStatus::OK->value)
@@ -84,7 +84,7 @@
                                 <div class="text-sm opacity-70">({{ $cert->expired?->diffForHumans() }})</div>
                             </td>
                             <td>
-                                <a href="https://{{ $cert->domain->name }}"
+                                <a href="https://{{ $cert->domain->name_human_readable }}"
                                    target="_blank"
                                    class="btn btn-sm btn-ghost">
                                     Перейти

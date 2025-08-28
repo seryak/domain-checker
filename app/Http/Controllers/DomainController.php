@@ -7,6 +7,7 @@ use App\Models\Domain;
 use App\Models\Enum\DomainStatus;
 use App\Models\SslCertificate;
 use App\Service\SslService;
+use App\Service\DomainNameConverter;
 
 class DomainController extends Controller
 {
@@ -29,15 +30,34 @@ class DomainController extends Controller
     public function store(Request $request)
     {
         try {
-            // Валидация входных данных
-            $request->validate([
-                'name' => 'required|string|regex:/^[a-zA-Z0-9.-]+$/|max:255',
-            ]);
-
             $domainName = $request->input('name');
 
+            // Валидация и нормализация входных данных
+            $domainConverter = app(DomainNameConverter::class);
+
+            if (empty($domainName)) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Доменное имя не может быть пустым.');
+            }
+
+            if (strlen($domainName) > 255) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Доменное имя слишком длинное (максимум 255 символов).');
+            }
+
+            if (!$domainConverter->isValidDomain($domainName)) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Некорректный формат доменного имени.');
+            }
+
+            // Конвертировать домен в punycode для поиска и сохранения
+            $storageName = $domainConverter->toPunycode($domainName);
+
             // Проверка, существует ли уже такой домен
-            $existingDomain = Domain::where('name', $domainName)->first();
+            $existingDomain = Domain::where('name', $storageName)->first();
             if ($existingDomain) {
                 return redirect()->back()
                     ->withInput()
@@ -46,7 +66,7 @@ class DomainController extends Controller
 
             // Создание нового домена
             $domain = Domain::create([
-                'name' => $domainName,
+                'name' => $storageName,
                 'status' => DomainStatus::ERROR->value,
             ]);
 
