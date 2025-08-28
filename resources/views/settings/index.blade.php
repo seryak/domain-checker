@@ -101,6 +101,14 @@
 
 @section('scripts')
 <script>
+    // Function to update logo based on theme
+    function updateLogo(theme) {
+        const logoElement = document.getElementById('app-logo');
+        if (logoElement) {
+            logoElement.src = `/logo_${theme}.png`;
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const submitBtn = document.querySelector('button[type="submit"]');
         const spinner = submitBtn.querySelector('.spinner');
@@ -148,6 +156,9 @@
                     // Update theme immediately
                     const selectedTheme = document.getElementById('theme').value;
                     document.documentElement.setAttribute('data-theme', selectedTheme);
+
+                    // Update logo immediately
+                    updateLogo(selectedTheme);
 
                     // Update page title
                     document.title = `Настройки - ${selectedLanguage.toUpperCase()}`;

@@ -24,7 +24,7 @@
         <!-- Sidebar -->
         <div class="w-64 border-r border-base-300 flex flex-col">
             <div class="p-4 border-b border-base-300">
-                <img src="/logo_{{ Settings::get('app_theme', 'light') }}.png" alt="SSLPatrol Logo" class="h-16 w-auto mb-2">
+                <img src="/logo_{{ Settings::get('app_theme', 'light') }}.png" alt="SSLPatrol Logo" class="h-16 w-auto mb-2" id="app-logo">
             </div>
             
             <nav class="flex-1 p-4">
