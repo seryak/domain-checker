@@ -130,5 +130,23 @@
             document.documentElement.setAttribute('data-theme', '{{ Settings::get('app_theme', 'light') }}');
         });
     </script>
+    @if(Settings::get('anonymous_statistics', false))
+    <script>
+        <!-- Matomo -->
+            var _paq = window._paq = window._paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+            var u="//65.21.152.121:8085/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    <!-- End Matomo Code -->
+
+    </script>
+    @endif
 </body>
 </html>

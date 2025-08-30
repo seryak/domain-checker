@@ -29,7 +29,8 @@ class SettingsController extends Controller
         // Валидация формы
         $request->validate([
             'language' => 'required|string|in:en,de,fr,zh,ja,ru,es,it,pt,tr,uk,sr',
-            'theme' => 'required|string|in:light,dark'
+            'theme' => 'required|string|in:light,dark',
+            'anonymous_statistics' => 'nullable|boolean'
         ]);
 
         // Сохранение выбранного языка в настройках
@@ -37,6 +38,9 @@ class SettingsController extends Controller
 
         // Сохранение выбранной темы в настройках
         Settings::set('app_theme', $request->theme);
+
+        // Сохранение настройки анонимной статистики
+        Settings::set('anonymous_statistics', $request->boolean('anonymous_statistics', false));
 
         // Возвращаем JSON ответ для AJAX запросов
         if ($request->ajax() || $request->wantsJson()) {

@@ -80,6 +80,26 @@
                     <span class="text-error text-sm mt-1">{{ $message }}</span>
                 @enderror
             </div>
+
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                    <span class="label-text">Разрешить сбор анонимной статистики</span>
+                </label>
+                @php
+                    $anonymousStatsEnabled = Settings::get('anonymous_statistics', false);
+                @endphp
+                <input type="checkbox"
+                       name="anonymous_statistics"
+                       value="1"
+                       {{ $anonymousStatsEnabled ? 'checked' : '' }}
+                       class="checkbox checkbox-primary" />
+                <label class="label">
+                    <span class="label-text-alt">Сбор анонимной статистики помогает улучшить качество приложения</span>
+                </label>
+                @error('anonymous_statistics')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                @enderror
+            </div>
             
             <div class="flex justify-end gap-3">
                 <a href="{{ route('ssl.report') }}" 
