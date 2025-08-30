@@ -56,6 +56,7 @@
                 <thead>
                     <tr>
                         <th>{{ __('table.domain') }}</th>
+                        <th>{{ __('table.port') }}</th>
                         <th>{{ __('table.status') }}</th>
                         <th>{{ __('table.expiry_date') }}</th>
                         <th>{{ __('table.actions') }}</th>
@@ -66,6 +67,9 @@
                     @forelse ($certificates as $cert)
                         <tr>
                             <td>{{ $cert->domain->name_human_readable }}</td>
+                            <td>
+                                <span class="badge">{{ $cert->port }}</span>
+                            </td>
                             <td>
                                 @switch($cert->status)
                                     @case(SslStatus::OK->value)
@@ -123,7 +127,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">{{ __('table.empty') }}</td>
+                            <td colspan="6" class="text-center">{{ __('table.empty') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

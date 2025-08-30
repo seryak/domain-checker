@@ -31,6 +31,8 @@ class DomainController extends Controller
     {
         try {
             $domainName = $request->input('name');
+            $checkSsl = $request->boolean('check_ssl', false);
+            $sslPort = $request->integer('ssl_port', 443);
 
             // Валидация и нормализация входных данных
             $domainConverter = app(DomainNameConverter::class);
@@ -53,6 +55,15 @@ class DomainController extends Controller
                     ->with('error', __('error.domain_invalid'));
             }
 
+            // Валидация SSL порта, если SSL проверка включена
+            if ($checkSsl) {
+                if ($sslPort < 1 || $sslPort > 65535) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', __('error.ssl_port_invalid', ['min' => 1, 'max' => 65535]));
+                }
+            }
+
             // Конвертировать домен в punycode для поиска и сохранения
             $storageName = $domainConverter->toPunycode($domainName);
 
@@ -70,12 +81,15 @@ class DomainController extends Controller
                 'status' => DomainStatus::ERROR->value,
             ]);
 
-            // Проверка SSL для нового домена
-            $sslService = app(SslService::class);
-            $sslService->checkSslForDomain($domain);
+            // Проверка SSL для нового домена, если включена
+            if ($checkSsl) {
+                $sslService = app(SslService::class);
+                // Передача порта в сервис, обновим сервис для приема порта
+                $sslService->checkSslForDomain($domain, $sslPort);
+            }
 
             return redirect()->route('ssl.report')
-                ->with('success', __('message.domain_added'));
+                ->with('success', $checkSsl ? __('message.domain_added') : __('message.domain_added_no_ssl'));
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()

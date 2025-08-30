@@ -12,14 +12,16 @@ class SslService
 {
     const DEFAULT_PORT = 443;
     protected Domain $domain;
+    protected int $port = self::DEFAULT_PORT;
     public function __construct(
         protected SslClientInterface $sslClient,
         protected UpdateSslInfoFromDtoAction $updateSslInfoFromDtoAction,
     ) {}
 
-    public function checkSslForDomain(Domain $domain): void
+    public function checkSslForDomain(Domain $domain, int $port = self::DEFAULT_PORT): void
     {
         $this->domain = $domain;
+        $this->port = $port;
         $certificates = $this->getCertificates();
         foreach ($certificates as $certificate) {
             $this->checkSsl($certificate);
@@ -31,7 +33,7 @@ class SslService
         $certificates = $this->domain->sslCertificates;
         if ($certificates->isEmpty()) {
             $certificate = $this->domain->sslCertificates()->create([
-                'port' => self::DEFAULT_PORT,
+                'port' => $this->port,
                 'status' => SslStatus::ERROR->value,
             ]);
             $certificates->push($certificate);

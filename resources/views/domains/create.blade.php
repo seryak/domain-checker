@@ -32,10 +32,10 @@
                 <label class="label">
                     <span class="label-text">{{ __('domain.name_label') }}</span>
                 </label>
-                <input type="text" 
-                       name="name" 
+                <input type="text"
+                       name="name"
                        id="name"
-                       placeholder="example.com" 
+                       placeholder="example.com"
                        class="input input-bordered w-full"
                        value="{{ old('name') }}"
                        required />
@@ -46,7 +46,28 @@
                     <span class="label-text-alt">{{ __('domain.name_help') }}</span>
                 </label>
             </div>
-            
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">{{ __('domain.ssl_port_label') }}</span>
+                </label>
+                <input type="number"
+                       name="ssl_port"
+                       id="ssl_port"
+                       min="1"
+                       max="65535"
+                       placeholder="443"
+                       class="input input-bordered w-full"
+                       value="{{ old('ssl_port', 443) }}"
+                       title="{{ __('domain.ssl_port_tooltip') }}" />
+                @error('ssl_port')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                @enderror
+                <label class="label">
+                    <span class="label-text-alt">{{ __('domain.ssl_port_help') }}</span>
+                </label>
+            </div>
+
             <div class="form-control">
                 <label class="label cursor-pointer justify-start gap-3">
                     <input type="checkbox" name="check_ssl" class="checkbox" checked />
