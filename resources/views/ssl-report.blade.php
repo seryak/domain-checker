@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @php use App\Models\Enum\SslStatus; @endphp
-@section('title', 'SSL Отчёт')
+@section('title', __('ssl.report.title'))
 
 @section('content')
 <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="card-title">SSL Отчёт</h2>
+            <h2 class="card-title">{{ __('ssl.report.title') }}</h2>
             <div class="flex gap-2">
                 <button class="btn btn-primary" type="submit" form="filterForm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
-                    Обновить отчет
+                    {{ __('ssl.report.update') }}
                 </button>
                 <button id="runCheckBtn" class="btn btn-secondary">
                     <span class="spinner hidden">
@@ -24,7 +24,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    <span class="button-text">Добавить домен</span>
+                    <span class="button-text">{{ __('ssl.add_domain') }}</span>
                 </a>
             </div>
         </div>
@@ -35,17 +35,17 @@
             <form id="filterForm" action="{{ route('ssl.report') }}" method="GET">
             <div class="flex flex-row md:flex-row gap-2 items-center">
                 <input type="text"
-                       placeholder="Поиск домена..."
+                       placeholder="{{ __('search.placeholder') }}"
                        class="input input-bordered w-full md:w-64"
                        name="search"
                        value="{{ request('search') }}"
                        form="filterForm">
                 
                 <select class="select select-bordered w-full md:w-40" name="status" form="filterForm">
-                    <option value="-" @selected(request('status') == '-')>Все статусы</option>
-                    <option value="{{ SslStatus::OK->value }}" @selected(request('status') == SslStatus::OK->value)>Действительные</option>
-                    <option value="{{ SslStatus::EXPIRED->value }}" @selected(request('status') == SslStatus::EXPIRED->value)>Истекли</option>
-                    <option value="{{ SslStatus::ERROR->value }}" @selected(request('status') == SslStatus::ERROR->value)>Ошибка</option>
+                    <option value="-" @selected(request('status') == '-')>{{ __('filter.all_status') }}</option>
+                    <option value="{{ SslStatus::OK->value }}" @selected(request('status') == SslStatus::OK->value)>{{ __('status.valid') }}</option>
+                    <option value="{{ SslStatus::EXPIRED->value }}" @selected(request('status') == SslStatus::EXPIRED->value)>{{ __('status.expired') }}</option>
+                    <option value="{{ SslStatus::ERROR->value }}" @selected(request('status') == SslStatus::ERROR->value)>{{ __('status.error') }}</option>
                 </select>
             </div>
             </form>
@@ -55,11 +55,11 @@
             <table class="table table-zebra">
                 <thead>
                     <tr>
-                        <th>Домен</th>
-                        <th>Статус</th>
-                        <th>Дата окончания</th>
-                        <th>Действия</th>
-                        <th>Управление</th>
+                        <th>{{ __('table.domain') }}</th>
+                        <th>{{ __('table.status') }}</th>
+                        <th>{{ __('table.expiry_date') }}</th>
+                        <th>{{ __('table.actions') }}</th>
+                        <th>{{ __('table.management') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,13 +69,13 @@
                             <td>
                                 @switch($cert->status)
                                     @case(SslStatus::OK->value)
-                                        <span class="badge badge-success">Действителен</span>
+                                        <span class="badge badge-success">{{ __('status.badge.valid') }}</span>
                                         @break
                                     @case(SslStatus::EXPIRED->value)
-                                        <span class="badge badge-warning">Истек</span>
+                                        <span class="badge badge-warning">{{ __('status.badge.expired') }}</span>
                                         @break
                                     @case(SslStatus::ERROR->value)
-                                        <span class="badge badge-error">Ошибка</span>
+                                        <span class="badge badge-error">{{ __('status.badge.error') }}</span>
                                         @break
                                 @endswitch
                             </td>
@@ -87,7 +87,7 @@
                                 <a href="https://{{ $cert->domain->name_human_readable }}"
                                    target="_blank"
                                    class="btn btn-sm btn-ghost">
-                                    Перейти
+                                    {{ __('button.go_to') }}
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
@@ -101,8 +101,8 @@
                                         @method('DELETE')
                                         <button type="button" 
                                                 class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete(this.form, 'Домен и все SSL-сертификаты будут удалены. Продолжить?')">
-                                            Удалить домен
+                                                onclick="confirmDelete(this.form, '{{ __('delete.domain.confirm') }}')">
+                                            {{ __('button.delete_domain') }}
                                         </button>
                                     </form>
                                     
@@ -113,8 +113,8 @@
                                             @method('DELETE')
                                             <button type="button" 
                                                     class="btn btn-warning btn-sm"
-                                                    onclick="confirmDelete(this.form, 'Удалить SSL-сертификат? Домен останется.')">
-                                                Удалить сертификат
+                                                    onclick="confirmDelete(this.form, '{{ __('delete.cert.confirm') }}')">
+                                                {{ __('button.delete_cert') }}
                                             </button>
                                         </form>
                                     @endif
@@ -123,7 +123,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">Нет данных для отображения</td>
+                            <td colspan="5" class="text-center">{{ __('table.empty') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

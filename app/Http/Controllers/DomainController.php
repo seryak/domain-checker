@@ -38,19 +38,19 @@ class DomainController extends Controller
             if (empty($domainName)) {
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', 'Доменное имя не может быть пустым.');
+                    ->with('error', __('error.domain_empty'));
             }
 
             if (strlen($domainName) > 255) {
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', 'Доменное имя слишком длинное (максимум 255 символов).');
+                    ->with('error', __('error.domain_too_long'));
             }
 
             if (!$domainConverter->isValidDomain($domainName)) {
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', 'Некорректный формат доменного имени.');
+                    ->with('error', __('error.domain_invalid'));
             }
 
             // Конвертировать домен в punycode для поиска и сохранения
@@ -61,7 +61,7 @@ class DomainController extends Controller
             if ($existingDomain) {
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', 'Домен уже существует в системе.');
+                    ->with('error', __('message.domain_exists'));
             }
 
             // Создание нового домена
@@ -75,11 +75,11 @@ class DomainController extends Controller
             $sslService->checkSslForDomain($domain);
 
             return redirect()->route('ssl.report')
-                ->with('success', 'Домен успешно добавлен и проверен.');
+                ->with('success', __('message.domain_added'));
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Ошибка при добавлении домена: ' . $e->getMessage());
+                ->with('error', __('error.domain_add') . $e->getMessage());
         }
     }
 
@@ -96,9 +96,9 @@ class DomainController extends Controller
             // благодаря каскадному удалению в базе данных или через события
             $domain->delete();
             
-            return redirect()->back()->with('success', 'Домен и все связанные SSL-сертификаты успешно удалены.');
+            return redirect()->back()->with('success', __('message.domain_deleted'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ошибка при удалении домена: ' . $e->getMessage());
+            return redirect()->back()->with('error', __('error.domain_delete') . $e->getMessage());
         }
     }
 }

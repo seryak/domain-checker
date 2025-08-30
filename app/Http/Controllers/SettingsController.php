@@ -46,12 +46,12 @@ class SettingsController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Настройки успешно сохранены!',
+                'message' => __('message.settings_saved'),
                 'theme' => $request->theme
             ]);
         }
 
         return redirect()->route('settings.index')
-            ->with('success', 'Настройки успешно сохранены!');
+            ->with('success', __('message.settings_saved'));
     }
 }

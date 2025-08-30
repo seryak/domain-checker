@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Добавить домен')
+@section('title', __('domain.create.title'))
 
 @section('content')
 <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
-        <h2 class="card-title mb-6">Добавить домен</h2>
+        <h2 class="card-title mb-6">{{ __('domain.create.title') }}</h2>
         
         @if (session('error'))
             <div class="alert alert-error mb-4">
@@ -30,7 +30,7 @@
             
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text">Доменное имя</span>
+                    <span class="label-text">{{ __('domain.name_label') }}</span>
                 </label>
                 <input type="text" 
                        name="name" 
@@ -43,28 +43,28 @@
                     <span class="text-error text-sm mt-1">{{ $message }}</span>
                 @enderror
                 <label class="label">
-                    <span class="label-text-alt">Введите доменное имя без http:// или https://</span>
+                    <span class="label-text-alt">{{ __('domain.name_help') }}</span>
                 </label>
             </div>
             
             <div class="form-control">
                 <label class="label cursor-pointer justify-start gap-3">
                     <input type="checkbox" name="check_ssl" class="checkbox" checked />
-                    <span class="label-text">Проверить SSL-сертификат после добавления</span>
+                    <span class="label-text">{{ __('ssl.check_label') }}</span>
                 </label>
             </div>
             
             <div class="flex justify-end gap-3">
                 <a href="{{ route('ssl.report') }}" 
                    class="btn btn-ghost">
-                    Отмена
+                    {{ __('button.cancel') }}
                 </a>
                 <button type="submit" 
                         class="btn btn-primary">
                     <span class="spinner hidden">
                         <i class="fas fa-spinner fa-spin"></i>
                     </span>
-                    <span class="button-text">Добавить домен</span>
+                    <span class="button-text">{{ __('button.add_domain') }}</span>
                 </button>
             </div>
         </form>

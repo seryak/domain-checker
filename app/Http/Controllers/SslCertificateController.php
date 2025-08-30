@@ -19,9 +19,9 @@ class SslCertificateController extends Controller
             // Удаление только сертификата, домен остается
             $certificate->delete();
             
-            return redirect()->back()->with('success', 'SSL-сертификат успешно удален.');
+            return redirect()->back()->with('success', __('message.cert_deleted'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ошибка при удалении SSL-сертификата: ' . $e->getMessage());
+            return redirect()->back()->with('error', __('error.cert_delete') . $e->getMessage());
         }
     }
 }
