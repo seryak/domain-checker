@@ -82,5 +82,6 @@
   "message.domain_deleted": "Домен та всі пов'язані SSL сертифікати успішно видалено.",
   "error.domain_delete": "Помилка при видаленні домену:",
   "message.cert_deleted": "SSL сертифікат успішно видалено.",
-  "error.cert_delete": "Помилка при видаленні SSL сертифіката:"
+  "error.cert_delete": "Помилка при видаленні SSL сертифіката:",
+  "app.version": "Версія"
 }

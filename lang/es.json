@@ -82,5 +82,6 @@
   "message.domain_deleted": "Dominio y todos los certificados SSL asociados eliminados exitosamente.",
   "error.domain_delete": "Error al eliminar el dominio:",
   "message.cert_deleted": "Certificado SSL eliminado exitosamente.",
-  "error.cert_delete": "Error al eliminar el certificado SSL:"
+  "error.cert_delete": "Error al eliminar el certificado SSL:",
+  "app.version": "Versión"
 }

@@ -84,6 +84,10 @@
                     </div>
                 </div>
             </div>
+
+            <div class="p-4 border-t border-base-300 text-center text-xs opacity-75">
+                <div class="font-medium">{{ __('app.version') }}: {{ config('nativephp.version') }}</div>
+            </div>
         </div>
 
         <!-- Main Content -->

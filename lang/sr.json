@@ -82,5 +82,6 @@
   "message.domain_deleted": "Домен и сви повезани SSL сертификати успешно избрисани.",
   "error.domain_delete": "Грешка при брисању домена:",
   "message.cert_deleted": "SSL сертификат успешно избрисан.",
-  "error.cert_delete": "Грешка при брисању SSL сертификата:"
+  "error.cert_delete": "Грешка при брисању SSL сертификата:",
+  "app.version": "Verzija"
 }

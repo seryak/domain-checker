@@ -82,5 +82,6 @@
   "message.domain_deleted": "Etki alanı ve ilişkili tüm SSL sertifikaları başarıyla silindi.",
   "error.domain_delete": "Etki alanı silinirken hata:",
   "message.cert_deleted": "SSL sertifikası başarıyla silindi.",
-  "error.cert_delete": "SSL sertifikası silinirken hata:"
+  "error.cert_delete": "SSL sertifikası silinirken hata:",
+  "app.version": "Sürüm"
 }

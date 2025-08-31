@@ -82,5 +82,6 @@
   "message.domain_deleted": "Domain and all associated SSL certificates successfully deleted.",
   "error.domain_delete": "Error deleting domain:",
   "message.cert_deleted": "SSL certificate successfully deleted.",
-  "error.cert_delete": "Error deleting SSL certificate:"
+  "error.cert_delete": "Error deleting SSL certificate:",
+  "app.version": "Version"
 }

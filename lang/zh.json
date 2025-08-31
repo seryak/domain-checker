@@ -82,5 +82,6 @@
   "message.domain_deleted": "域名和所有关联的 SSL 证书删除成功。",
   "error.domain_delete": "删除域名时出错：",
   "message.cert_deleted": "SSL 证书删除成功。",
-  "error.cert_delete": "删除 SSL 证书时出错："
+  "error.cert_delete": "删除 SSL 证书时出错：",
+  "app.version": "版本"
 }

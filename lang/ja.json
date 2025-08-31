@@ -82,5 +82,6 @@
   "message.domain_deleted": "ドメインと関連するすべての SSL 証明書が正常に削除されました。",
   "error.domain_delete": "ドメインの削除中にエラーが発生しました：",
   "message.cert_deleted": "SSL 証明書が正常に削除されました。",
-  "error.cert_delete": "SSL 証明書の削除中にエラーが発生しました："
+  "error.cert_delete": "SSL 証明書の削除中にエラーが発生しました：",
+  "app.version": "バージョン"
 }
