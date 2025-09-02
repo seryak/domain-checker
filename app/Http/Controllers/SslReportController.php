@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SslCertificate;
-use Native\Laravel\Facades\Notification;
 
 class SslReportController extends Controller
 {
@@ -12,7 +11,9 @@ class SslReportController extends Controller
     {
         $certificates = SslCertificate::query()
             ->with('domain')
-            ->when($request->filled('search'), fn($q) => $q->whereHas('domain', fn($q) => $q->where('name', 'like', "%{$request->search}%")))
+            ->when($request->filled('search'), function($q) use ($request) {
+                $q->whereHas('domain', fn($q) => $q->where('original_name', 'like', "%{$request->search}%"));
+            })
             ->when($request->filled('status') && $request->status != '-', fn($q) => $q->where('status', $request->status))
             ->orderBy('expired')
             ->paginate(25);
@@ -39,9 +40,9 @@ class SslReportController extends Controller
     public function checkSingle(Request $request)
     {
         try {
-            // Валидация входных данных
+            // Валидация входных данных с поддержкой Unicode доменов
             $request->validate([
-                'domain' => 'required|string|regex:/^[a-zA-Z0-9.-]+$/'
+                'domain' => 'required|string|regex:/^[а-яёa-z0-9.-]+$/iu'
             ]);
             
             $domainName = $request->input('domain');

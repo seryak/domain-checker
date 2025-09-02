@@ -14,6 +14,7 @@ class Domain extends Model
 
     protected $fillable = [
         'name',
+        'original_name',
         'expired_at',
         'status'
     ];
@@ -32,6 +33,10 @@ class Domain extends Model
     public function setNameAttribute($value)
     {
         try {
+            // Сохранить оригинальное имя перед конвертацией
+            $this->attributes['original_name'] = $value;
+
+            // Конвертировать в punycode для хранения
             $this->attributes['name'] = app(DomainNameConverter::class)->toPunycode($value);
         } catch (\Exception $e) {
             Log::error('Failed to convert domain to punycode: ' . $value . '. Error: ' . $e->getMessage());
