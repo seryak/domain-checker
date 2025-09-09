@@ -6,8 +6,23 @@ use App\Http\Controllers\LibadwaitaDemoController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\SslCertificateController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', [SslReportController::class, 'index'])->name('ssl.report');
+// Welcome screen and analytics consent
+Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');
+Route::post('/welcome', [WelcomeController::class, 'acceptTerms'])->name('welcome.accept');
+Route::get('/analytics-consent', [WelcomeController::class, 'analyticsConsent'])->name('analytics.consent');
+Route::post('/analytics-consent', [WelcomeController::class, 'submitAnalyticsConsent'])->name('analytics.consent.submit');
+
+// Redirect to welcome if first launch, otherwise to SSL report
+Route::get('/', function () {
+    $firstLaunchCompleted = \Native\Laravel\Facades\Settings::get('first_launch_completed', false);
+    return $firstLaunchCompleted
+        ? redirect()->route('ssl.report')
+        : redirect()->route('welcome');
+})->name('home');
+
+Route::get('/ssl-report', [SslReportController::class, 'index'])->name('ssl.report');
 
 //Route::get('/ssl-report', [SslReportController::class, 'index'])->name('ssl.report');
 Route::post('/trigger-check', [SslReportController::class, 'triggerCheck'])->name('ssl.trigger-check');

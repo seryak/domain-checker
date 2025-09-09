@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         // Применяем middleware для установки языка ко всем веб-запросам
         $middleware->web(\App\Http\Middleware\SetLanguage::class);
+
+        // Middleware для проверки согласия с условиями использования
+        $middleware->web(\App\Http\Middleware\CheckTermsAgreed::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

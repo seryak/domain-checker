@@ -3,60 +3,178 @@
 @section('title', __('welcome.title'))
 
 @section('content')
-<div class="card bg-base-100 shadow-xl">
-    <div class="card-body">
-        <h2 class="card-title">{{ __('welcome.greeting') }}</h2>
-        <p>{{ __('welcome.description') }}</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div class="card bg-base-200">
-                <div class="card-body">
-                    <h3 class="card-title text-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                        {{ __('feature.docs.title') }}
-                    </h3>
-                    <p>{{ __('feature.docs.description') }}</p>
-                    <div class="card-actions justify-end mt-2">
-                        <a href="https://laravel.com/docs" target="_blank" class="btn btn-primary btn-sm">
-                            {{ __('button.visit') }}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+<div class="min-h-screen bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center p-4">
+    <div class="max-w-md w-full space-y-8">
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-primary mb-2">{{ __('welcome.title') }}</h1>
+            <p class="text-lg text-base-content/70">
+                {{ __('welcome.agreement_text') }}
+
+                <a href="#terms-modal" class="text-primary hover:text-primary-focus underline font-medium">
+                    {{ __('welcome.terms_link') }}
+                </a>
+
+                &nbsp;{{ __('welcome.privacy_connector') }}
+
+                <a href="#privacy-modal" class="text-primary hover:text-primary-focus underline font-medium">
+                    {{ __('welcome.privacy_link') }}
+                </a>
+            </p>
+        </div>
+
+        <!-- Continue Button -->
+        <div class="flex justify-center">
+            <form action="{{ route('welcome.accept') }}" method="POST" class="w-full">
+                @csrf
+                <button type="submit"
+                        class="w-full bg-primary hover:bg-primary-focus text-primary-content font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-focus focus:ring-offset-2">
+                    {{ __('welcome.button_continue') }}
+                </button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-sm text-base-content/50">
+            SSLPatrol v{{ config('nativephp.appVersion', '1.0') }}
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="terms-modal" class="modal">
+        <div class="modal-box w-11/12 max-w-4xl max-h-[80vh] overflow-y-auto">
+            <h3 class="font-bold text-lg mb-4">{{ __('welcome.terms_link') }}</h3>
+            <div class="prose prose-sm max-w-none">
+                <h1>Terms of Service</h1>
+
+                <p><strong>Effective date:</strong> [set date]</p>
+
+                <p>These Terms of Service ("Terms") govern your use of the SSLPatrol desktop application ("Application"), owned and operated by <strong>Mikhail Seriakov</strong> ("we", "us", or "our"). By downloading, installing, or using the Application, you ("you", "user") agree to be bound by these Terms.</p>
+
+                <h2>1. Use of the Application</h2>
+                <ul>
+                    <li>The Application is currently provided free of charge.</li>
+                    <li>You may install and use the Application on any number of devices.</li>
+                    <li>You agree not to:</li>
+                    <ul>
+                        <li>Resell, rent, or sublicense the Application.</li>
+                        <li>Use the Application for sending spam, conducting attacks, or other malicious activities.</li>
+                    </ul>
+                </ul>
+
+                <h2>2. Data Collection and Privacy</h2>
+                <ul>
+                    <li>The Application collects limited usage statistics via <strong>PostHog</strong> to help improve functionality.</li>
+                    <li>In the future, cloud integration may be introduced (e.g., storing domain data on our servers). You will be informed when this feature becomes available.</li>
+                    <li>We may collect your email address with your explicit consent for the purpose of sending product updates and news.</li>
+                    <li>For details, please refer to our Privacy Policy.</li>
+                </ul>
+
+                <h2>3. Disclaimer of Warranties</h2>
+                <ul>
+                    <li>The Application is provided <strong>"as is"</strong>, without any warranties, express or implied.</li>
+                    <li>We do not warrant that the Application will be error-free, uninterrupted, or meet your specific requirements.</li>
+                </ul>
+
+                <h2>4. Limitation of Liability</h2>
+                <ul>
+                    <li>We are not responsible for any damages, data loss, or consequences resulting from the use of the Application.</li>
+                    <li>You assume full responsibility for your use of the Application.</li>
+                </ul>
+
+                <h2>5. Termination</h2>
+                <p>We may suspend or terminate your access to the Application if you violate these Terms. You may stop using the Application at any time by uninstalling it.</p>
+
+                <h2>6. Governing Law</h2>
+                <p>These Terms shall be governed by and construed in accordance with the laws of the <strong>Republic of Serbia</strong>.</p>
+
+                <h2>7. Changes to the Terms</h2>
+                <p>We may update these Terms from time to time. The most current version will always be available at <a href="https://sslpatrol.io" target="_blank">sslpatrol.io</a>. By continuing to use the Application after updates, you agree to the revised Terms.</p>
+
+                <h2>8. Language of the Terms</h2>
+                <p>This document may be available in other languages for convenience. In case of any conflict or inconsistency, the <strong>English version shall prevail</strong>.</p>
+
+                <h2>9. Contact</h2>
+                <p>For questions about these Terms, please contact us at:</p>
+                <p><strong>Email:</strong> hello@sslpatrol.io<br>
+                <strong>Website:</strong> <a href="https://sslpatrol.io" target="_blank">https://sslpatrol.io</a></p>
             </div>
-            
-            <div class="card bg-base-200">
-                <div class="card-body">
-                    <h3 class="card-title text-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                        {{ __('feature.videos.title') }}
-                    </h3>
-                    <p>{{ __('feature.videos.description') }}</p>
-                    <div class="card-actions justify-end mt-2">
-                        <a href="https://laracasts.com" target="_blank" class="btn btn-primary btn-sm">
-                            {{ __('button.visit') }}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+            <div class="modal-action">
+                <a href="#" class="btn">Закрыть</a>
             </div>
         </div>
-        
-        <div class="mt-6">
-            <a href="https://cloud.laravel.com" target="_blank" class="btn btn-success">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
-                </svg>
-                {{ __('feature.deploy.title') }}
-            </a>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div id="privacy-modal" class="modal">
+        <div class="modal-box w-11/12 max-w-4xl max-h-[80vh] overflow-y-auto">
+            <h3 class="font-bold text-lg mb-4">{{ __('welcome.privacy_link') }}</h3>
+            <div class="prose prose-sm max-w-none">
+                <h1>Privacy Policy</h1>
+
+                <p><strong>Effective date:</strong> [set date]</p>
+
+                <p>This Privacy Policy explains how <strong>SSLPatrol</strong> ("we", "us", or "our"), operated by <strong>Mikhail Seriakov</strong>, collects, uses, and protects your information when you use our desktop application ("Application").</p>
+
+                <h2>1. Information We Collect</h2>
+                <p>We may collect the following types of information:</p>
+                <ul>
+                    <li><strong>Usage Data</strong>: We use <strong>PostHog</strong> analytics to collect anonymized information about how you use the Application (e.g., number of checks, feature usage, application performance). This data does not include personal content such as your domains or SSL certificates.</li>
+                    <li><strong>Email Address</strong>: If you provide your email with explicit consent, we may store it to send you updates, product news, and information about new features.</li>
+                    <li><strong>Future Features</strong>: If cloud integration is introduced (e.g., storing domain data on our servers), additional information may be collected. You will be informed and asked for consent before this feature becomes active.</li>
+                </ul>
+
+                <h2>2. How We Use Your Information</h2>
+                <p>We use collected information to:</p>
+                <ul>
+                    <li>Improve the Application and user experience.</li>
+                    <li>Monitor performance and detect issues.</li>
+                    <li>Communicate with you about updates and new features (only if you have given consent).</li>
+                </ul>
+
+                <h2>3. Sharing of Information</h2>
+                <ul>
+                    <li>We do not sell or rent your data to third parties.</li>
+                    <li>Usage analytics are processed by <strong>PostHog</strong>, an analytics provider. Data may be transferred to their servers depending on your location.</li>
+                    <li>We may disclose information if required by law or to protect our rights and security.</li>
+                </ul>
+
+                <h2>4. Data Retention</h2>
+                <ul>
+                    <li>Usage data is stored for as long as necessary to improve the Application.</li>
+                    <li>Email addresses are stored until you unsubscribe or request deletion.</li>
+                    <li>If future cloud storage is implemented, retention rules will be clearly communicated.</li>
+                </ul>
+
+                <h2>5. Your Rights (GDPR / EU Users)</h2>
+                <p>If you are located in the EU or EEA, you have the right to:</p>
+                <ul>
+                    <li>Access, correct, or delete your personal data.</li>
+                    <li>Withdraw consent at any time (e.g., unsubscribe from emails).</li>
+                    <li>Request a copy of the data we hold about you.</li>
+                </ul>
+                <p>You can exercise these rights by contacting us at <strong>hello@sslpatrol.io</strong>.</p>
+
+                <h2>6. Security</h2>
+                <p>We take reasonable measures to protect your information, but no system is 100% secure. You use the Application at your own risk.</p>
+
+                <h2>7. Children's Privacy</h2>
+                <p>The Application is not directed to children under the age of 16, and we do not knowingly collect data from them.</p>
+
+                <h2>8. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. The latest version will always be available at <a href="https://sslpatrol.io" target="_blank">sslpatrol.io</a>.</p>
+
+                <h2>9. Language of the Policy</h2>
+                <p>This document may be available in other languages for convenience. In case of any conflict or inconsistency, the <strong>English version shall prevail</strong>.</p>
+
+                <h2>10. Contact</h2>
+                <p>If you have questions about this Privacy Policy, please contact us:</p>
+                <p><strong>Email:</strong> hello@sslpatrol.io<br>
+                <strong>Website:</strong> <a href="https://sslpatrol.io" target="_blank">https://sslpatrol.io</a></p>
+            </div>
+            <div class="modal-action">
+                <a href="#" class="btn">Закрыть</a>
+            </div>
         </div>
     </div>
 </div>
