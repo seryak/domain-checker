@@ -19,15 +19,14 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 </head>
-<body class="min-h-screen flex flex-col bg-base-100">
-    <div class="flex flex-1 overflow-hidden">
-        <!-- Sidebar -->
-        <div class="w-64 border-r border-base-300 flex flex-col">
+<body class="min-h-screen bg-base-100">
+    <!-- Sidebar -->
+    <div class="sidebar-fixed w-64 border-r border-base-300 flex flex-col">
             <div class="p-4 border-b border-base-300">
                 <img src="/logo_{{ Settings::get('app_theme', 'light') }}.png" alt="SSLPatrol Logo" class="h-16 w-auto mb-2" id="app-logo">
             </div>
             
-            <nav class="flex-1 p-4">
+            <nav class="flex-1 p-4 overflow-hidden">
                 <ul class="menu menu-vertical gap-1">
                     <li class="menu-title">
                         <span>{{ __('nav.section.main') }}</span>
@@ -68,6 +67,14 @@
                             {{ __('nav.settings') }}
                         </a>
                     </li>
+{{--                    <li>--}}
+{{--                        <a href="{{ route('updates.index') }}" @if(request()->is('updates*')) class="active" @endif>--}}
+{{--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />--}}
+{{--                            </svg>--}}
+{{--                            🔄 Обновления--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                 </ul>
             </nav>
             
@@ -86,12 +93,23 @@
             </div>
 
             <div class="p-4 border-t border-base-300 text-center text-xs opacity-75">
-                <div class="font-medium">{{ __('app.version') }}: {{ config('nativephp.version') }}</div>
+                <div class="font-medium">
+                    {{ __('app.version') }}: {{ config('nativephp.version') }}
+                    @php
+                        $currentVersion = config('nativephp.version');
+                        $latestVersion = \Native\Laravel\Facades\Settings::get('app_latest_version');
+
+                        if ($latestVersion && \version_compare($latestVersion, $currentVersion) > 0) {
+                            $updateText = __('app.update_available');
+                            echo ' · <a href="https://sslpatrol.io" target="_blank" class="external-link text-blue-500 hover:text-blue-700 underline">' . $updateText . '</a>';
+                        }
+                    @endphp
+                </div>
             </div>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="ml-64 overflow-auto">
             <!-- Top Bar -->
 {{--            <div class="bg-base-100 border-b border-base-300 p-4">--}}
 {{--                <div class="flex items-center justify-between">--}}
@@ -121,12 +139,10 @@
 {{--            </div>--}}
 
             <!-- Content Area -->
-            <div class="flex-1 overflow-auto p-6">
+            <div class="overflow-auto p-6">
                 @yield('content')
             </div>
         </div>
-    </div>
-
     @yield('scripts')
     <script>
         // Initialize theme when DOM is loaded
@@ -172,5 +188,49 @@
     })();
     <!--End of Tawk.to Script-->
 </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработчик кликов по всем внешним ссылкам
+            document.addEventListener('click', function(event) {
+                const link = event.target.closest('a[target="_blank"], .external-link, a[href^="http"]');
+
+                if (link && link.href &&
+                    link.href.startsWith('http') &&
+                    !link.href.includes(window.location.host)) {
+
+                    event.preventDefault();
+
+                    // Правильный способ для NativePHP/Electron
+                    if (typeof window.electron !== 'undefined' && window.electron.shell) {
+                        window.electron.shell.openExternal(link.href).catch(err => {
+                            console.error('Failed to open external link:', err);
+                        });
+                    } else if (typeof require !== 'undefined') {
+                        // Fallback для обычных Electron приложений
+                        try {
+                            require('electron').shell.openExternal(link.href);
+                        } catch (e) {
+                            console.warn('Could not open external link:', e);
+                            // Последний fallback - открываем в новом окне
+                            window.open(link.href, '_blank');
+                        }
+                    } else {
+                        // Для обычного браузера
+                        window.open(link.href, '_blank');
+                    }
+                }
+            });
+
+            // Добавим класс к ссылке обновления
+            const updateLink = document.querySelector('a[href*="sslpatrol.io"]');
+            if (updateLink) {
+                updateLink.classList.add('external-link');
+            }
+
+            console.log('External link handler initialized');
+            console.log('Electron API available:', typeof window.electron !== 'undefined');
+        });
+    </script>
 </body>
 </html>
