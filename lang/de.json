@@ -83,5 +83,18 @@
   "error.domain_delete": "Fehler beim Löschen der Domain:",
   "message.cert_deleted": "SSL-Zertifikat erfolgreich gelöscht.",
   "error.cert_delete": "Fehler beim Löschen des SSL-Zertifikats:",
-  "app.version": "Version"
+  "app.version": "Version",
+  "app.update_available": "Aktualisierung verfügbar",
+  "welcome.title": "Willkommen bei SSLPatrol",
+  "welcome.agreement_text": "Durch die Nutzung von SSLPatrol stimmen Sie den",
+  "welcome.terms_link": "Nutzungsbedingungen",
+  "welcome.privacy_connector": "und",
+  "welcome.privacy_link": "Datenschutzbestimmungen",
+  "welcome.button_continue": "Weiter",
+  "analytics.title": "Helfen Sie uns, SSLPatrol zu verbessern",
+  "analytics.description": "Wir sammeln anonyme Nutzungsstatistiken, um Ihr Erlebnis zu verbessern, wie verwendete Funktionen und gefundene Fehler. Diese Daten helfen uns, SSLPatrol zu erweitern, neue Funktionen hinzuzufügen und Zuverlässigkeit zu gewährleisten.",
+  "analytics.disclaimer": "Wir sammeln keine überprüften Domains, persönlichen Informationen oder irgendwelche identifizierenden Daten. Alle Analysen sind vollständig anonym und werden ausschließlich für Verbesserungen verwendet.",
+  "analytics.button_allow": "Zulassen",
+  "analytics.button_decline": "Nein, danke",
+  "error.terms_required": "Sie müssen den Nutzungsbedingungen zustimmen, um fortzufahren."
 }

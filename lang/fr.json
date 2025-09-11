@@ -83,5 +83,18 @@
   "error.domain_delete": "Erreur lors de la suppression du domaine:",
   "message.cert_deleted": "Certificat SSL supprimé avec succès.",
   "error.cert_delete": "Erreur lors de la suppression du certificat SSL:",
-  "app.version": "Version"
+  "app.version": "Version",
+  "app.update_available": "mise à jour disponible",
+  "welcome.title": "Bienvenue sur SSLPatrol",
+  "welcome.agreement_text": "En utilisant SSLPatrol, vous acceptez les",
+  "welcome.terms_link": "Conditions de service",
+  "welcome.privacy_connector": "et la",
+  "welcome.privacy_link": "Politique de confidentialité",
+  "welcome.button_continue": "Continuer",
+  "analytics.title": "Aidez-nous à améliorer SSLPatrol",
+  "analytics.description": "Nous collectons des statistiques d'utilisation anonymes pour améliorer votre expérience, telles que les fonctionnalités utilisées et les bogues détectés. Ces données nous aident à améliorer SSLPatrol, ajouter de nouvelles fonctionnalités et assurer la fiabilité.",
+  "analytics.disclaimer": "Nous ne collectons pas de domaines vérifiés, d'informations personnelles ou de données d'identification. Toutes les analyses sont entièrement anonymes et utilisées exclusivement pour les améliorations.",
+  "analytics.button_allow": "Autoriser",
+  "analytics.button_decline": "Non merci",
+  "error.terms_required": "Vous devez accepter les Conditions de service pour continuer."
 }

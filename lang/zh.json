@@ -83,5 +83,18 @@
   "error.domain_delete": "删除域名时出错：",
   "message.cert_deleted": "SSL 证书删除成功。",
   "error.cert_delete": "删除 SSL 证书时出错：",
-  "app.version": "版本"
+  "app.version": "版本",
+  "app.update_available": "有可用更新",
+  "welcome.title": "欢迎使用 SSLPatrol",
+  "welcome.agreement_text": "使用 SSLPatrol，即表示您同意",
+  "welcome.terms_link": "服务条款",
+  "welcome.privacy_connector": "和",
+  "welcome.privacy_link": "隐私政策",
+  "welcome.button_continue": "继续",
+  "analytics.title": "帮助我们改进 SSLPatrol",
+  "analytics.description": "我们收集匿名使用统计信息来改善您的体验，例如使用的功能和遇到的错误。这些数据帮助我们增强 SSLPatrol、添加新功能并确保可靠性。",
+  "analytics.disclaimer": "我们不收集已检查的域名、个人信息或任何标识数据。所有分析完全匿名，并专门用于改进。",
+  "analytics.button_allow": "允许",
+  "analytics.button_decline": "不，谢谢",
+  "error.terms_required": "您必须同意服务条款才能继续。"
 }

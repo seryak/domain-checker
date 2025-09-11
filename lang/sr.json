@@ -83,5 +83,18 @@
   "error.domain_delete": "Грешка при брисању домена:",
   "message.cert_deleted": "SSL сертификат успешно избрисан.",
   "error.cert_delete": "Грешка при брисању SSL сертификата:",
-  "app.version": "Verzija"
+  "app.version": "Verzija",
+  "app.update_available": "доступно ажурирање",
+  "welcome.title": "Добродошли у SSLPatrol",
+  "welcome.agreement_text": "Користећи SSLPatrol, слажете се с",
+  "welcome.terms_link": "Условима коришћења",
+  "welcome.privacy_connector": "и",
+  "welcome.privacy_link": "Политиком приватности",
+  "welcome.button_continue": "Настави",
+  "analytics.title": "Помозите нам да побољшамо SSLPatrol",
+  "analytics.description": "Сакупљамо анонимну статистику коришћења да бисмо побољшали ваше искуство, као што су коришћене функције и откривене грешке. Ови подаци нам помажу да побољшамо SSLPatrol, додамо нове функције и обезбедимо поузданост.",
+  "analytics.disclaimer": "Не сакупљамо верификоване домене, личне информације или било које идентификујуће податке. Сва анализа је потпуно анонимна и користи се искључиво за побољшања.",
+  "analytics.button_allow": "Дозволи",
+  "analytics.button_decline": "Не, хвала",
+  "error.terms_required": "Морате прихватити Услове коришћења да бисте наставили."
 }

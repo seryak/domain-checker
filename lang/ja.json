@@ -83,5 +83,18 @@
   "error.domain_delete": "ドメインの削除中にエラーが発生しました：",
   "message.cert_deleted": "SSL 証明書が正常に削除されました。",
   "error.cert_delete": "SSL 証明書の削除中にエラーが発生しました：",
-  "app.version": "バージョン"
+  "app.version": "バージョン",
+  "app.update_available": "アップデートが利用可能です",
+  "welcome.title": "SSLPatrol へようこそ",
+  "welcome.agreement_text": "SSLPatrol を使用することにより、あなたは",
+  "welcome.terms_link": "利用規約",
+  "welcome.privacy_connector": "および",
+  "welcome.privacy_link": "プライバシーポリシー",
+  "welcome.button_continue": "続ける",
+  "analytics.title": "SSLPatrol の改善にご協力ください",
+  "analytics.description": "使用された機能や発見されたバグなど、体験を改善するための匿名利用統計情報を収集します。これらのデータは SSLPatrol の強化、新しい機能の追加、信頼性の確保に役立ちます。",
+  "analytics.disclaimer": "チェックされたドメイン、個人情報、または識別データは収集しません。すべての分析は完全に匿名であり、改善目的でのみ使用されます。",
+  "analytics.button_allow": "許可",
+  "analytics.button_decline": "いいえ、結構です",
+  "error.terms_required": "続行するには利用規約に同意が必要です。"
 }

@@ -83,5 +83,18 @@
   "error.domain_delete": "Помилка при видаленні домену:",
   "message.cert_deleted": "SSL сертифікат успішно видалено.",
   "error.cert_delete": "Помилка при видаленні SSL сертифіката:",
-  "app.version": "Версія"
+  "app.version": "Версія",
+  "app.update_available": "доступне оновлення",
+  "welcome.title": "Ласкаво просимо до SSLPatrol",
+  "welcome.agreement_text": "Використовуючи SSLPatrol, ви погоджуєтеся з",
+  "welcome.terms_link": "Умовами обслуговування",
+  "welcome.privacy_connector": "та",
+  "welcome.privacy_link": "Політикою конфіденційності",
+  "welcome.button_continue": "Продовжити",
+  "analytics.title": "Допоможіть нам покращити SSLPatrol",
+  "analytics.description": "Ми збираємо анонімну статистику використання, щоб покращити ваш досвід, як використані функції та виявлені помилки. Ці дані допомагають нам покращити SSLPatrol, додати нові функції та забезпечити надійність.",
+  "analytics.disclaimer": "Ми не збираємо перевірені домени, особисту інформацію або будь-які ідентифікувальні дані. Вся аналітика повністю анонімна та використовується виключно для покращень.",
+  "analytics.button_allow": "Дозволити",
+  "analytics.button_decline": "Ні, дякую",
+  "error.terms_required": "Необхідно погодитись з умовами обслуговування для продовження."
 }

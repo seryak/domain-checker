@@ -83,5 +83,18 @@
   "error.domain_delete": "Error deleting domain:",
   "message.cert_deleted": "SSL certificate successfully deleted.",
   "error.cert_delete": "Error deleting SSL certificate:",
-  "app.version": "Version"
+  "app.update_available": "update available",
+  "app.version": "Version",
+  "welcome.title": "Welcome to SSLPatrol",
+  "welcome.agreement_text": "By using SSLPatrol, you agree to the",
+  "welcome.terms_link": "Terms of Service",
+  "welcome.privacy_connector": "and",
+  "welcome.privacy_link": "Privacy Policy",
+  "welcome.button_continue": "Continue",
+  "analytics.title": "Help us improve SSLPatrol",
+  "analytics.description": "We collect anonymous usage statistics to improve your experience, such as features used and bugs encountered. These data help us enhance SSLPatrol, add new features, and ensure reliability.",
+  "analytics.disclaimer": "We don't collect checked domains, personal information, or any identifying data. All analytics are fully anonymous and used exclusively for improvements.",
+  "analytics.button_allow": "Allow",
+  "analytics.button_decline": "No, thanks",
+  "error.terms_required": "You must agree to the Terms of Service to continue."
 }

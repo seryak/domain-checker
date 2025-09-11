@@ -83,5 +83,18 @@
   "error.domain_delete": "Ошибка при удалении домена:",
   "message.cert_deleted": "SSL-сертификат успешно удален.",
   "error.cert_delete": "Ошибка при удалении SSL-сертификата:",
-  "app.version": "Версия"
+   "app.update_available": "доступно обновление",
+  "app.version": "Версия",
+  "welcome.title": "Добро пожаловать в SSLPatrol",
+  "welcome.agreement_text": "Используя SSLPatrol, вы соглашаетесь с",
+  "welcome.terms_link": "Условиями обслуживания",
+  "welcome.privacy_connector": "и",
+  "welcome.privacy_link": "Политикой конфиденциальности",
+  "welcome.button_continue": "Продолжить",
+  "analytics.title": "Помогите нам улучшить SSLPatrol",
+  "analytics.description": "Мы собираем анонимную статистику использования, чтобы улучшить ваше впечатление, такие как используемые функции и обнаруженные ошибки. Эти данные помогают нам усовершенствовать SSLPatrol, добавлять новые функции и обеспечивать надёжность.",
+  "analytics.disclaimer": "Мы не собираем проверенные домены, личную информацию или любые идентифицирующие данные. Вся аналитика полностью анонимна и используется исключительно для улучшений.",
+  "analytics.button_allow": "Разрешить",
+  "analytics.button_decline": "Нет, спасибо",
+  "error.terms_required": "Необходимо согласиться с Условиями обслуживания для продолжения."
 }

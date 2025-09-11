@@ -83,5 +83,18 @@
   "error.domain_delete": "Etki alanı silinirken hata:",
   "message.cert_deleted": "SSL sertifikası başarıyla silindi.",
   "error.cert_delete": "SSL sertifikası silinirken hata:",
-  "app.version": "Sürüm"
+  "app.version": "Sürüm",
+  "app.update_available": "güncelleme mevcut",
+  "welcome.title": "SSLPatrol'a hoş geldiniz",
+  "welcome.agreement_text": "SSLPatrol'ı kullanarak şunları kabul etmiş olursunuz:",
+  "welcome.terms_link": "Hizmet Koşulları",
+  "welcome.privacy_connector": "ve",
+  "welcome.privacy_link": "Gizlilik Politikası",
+  "welcome.button_continue": "Devam Et",
+  "analytics.title": "SSLPatrol'u geliştirmemize yardım edin",
+  "analytics.description": "Deneyiminizi geliştirmek için kullanılan özellikler ve tespit edilen hatalar gibi anonim kullanım istatistiklerini topluyoruz. Bu veriler SSLPatrol'u geliştirmemize, yeni özellikler eklememize ve güvenilirliği sağlamamıza yardımcı olur.",
+  "analytics.disclaimer": "Doğrulanmış alan adlarını, kişisel bilgileri veya tanımlayıcı verileri toplamıyoruz. Tüm analizler tamamen anonimdir ve iyileştirmeler için özel olarak kullanılır.",
+  "analytics.button_allow": "İzin Ver",
+  "analytics.button_decline": "Hayır, teşekkürler",
+  "error.terms_required": "Devam etmek için Hizmet Koşullarını kabul etmelisiniz."
 }
